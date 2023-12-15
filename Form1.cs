@@ -335,7 +335,7 @@ namespace Tooted
 
         private void SaadaArve_btn_Click(object sender, EventArgs e)
         {
-            string adress = Interaction.InputBox("Sisesta e-mail", "Kuhu saada", "marina.oleinik@tthk.ee");
+            string adress = Interaction.InputBox("Sisesta e-mail", "Kuhu saada", "egorfedorenko@gmail.com.ee");
             try
             {
                 MailMessage mail = new MailMessage();
