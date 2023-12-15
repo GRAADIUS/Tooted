@@ -245,7 +245,7 @@ namespace Tooted
             pictureBox1.SizeMode = PictureBoxSizeMode.Zoom;
             connect.Close();
         }
-
+         
         private void dataGridView1_RowHeaderMouseClick(object sender, DataGridViewCellMouseEventArgs e)
         {
             Id = (int)dataGridView1.Rows[e.RowIndex].Cells["Id"].Value;
