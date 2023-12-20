@@ -13,7 +13,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using System.Xml.Linq;
-using Aspose.Pdf;
+//using Aspose.Pdf;
 using Microsoft.VisualBasic;
 using Image = System.Drawing.Image;
 
@@ -312,7 +312,7 @@ namespace Tooted
             textBox3.Text = "";
             textBox2.Text = "";
             pictureBox1.Image = null;
-        }
+        }/*
         Document document;
         private void Ostan_btn_Click(object sender, EventArgs e)//arve koostamine
         {
@@ -325,7 +325,7 @@ namespace Tooted
             }
             document.Save(@"..\..\Arved\Arve_.pdf");
             document.Dispose();
-        }
+        }*/
         List<string> Tooded_list = new List<string>();//tooded listisse
         private void Valik_btn_Click(object sender, EventArgs e)
         {
@@ -333,6 +333,20 @@ namespace Tooted
             Tooded_list.Add((textBox1.Text + "  " + textBox2.Text + "  " + textBox3.Text + "  " + (Convert.ToInt32(textBox3.Text.ToString()) * Convert.ToInt32(textBox2.Text.ToString()))).ToString());
         }
 
+        private void button7_Click(object sender, EventArgs e)
+        {
+            textBox1.Text = "";
+            textBox3.Text = "";
+            textBox2.Text = "";
+            pictureBox1.Image = null;
+        }
+
+        private void button9_Click(object sender, EventArgs e)
+        {
+            Tooded_list.Add("-----------------------");
+            Tooded_list.Add((textBox1.Text + "  " + textBox2.Text + "  " + textBox3.Text + "  " + (Convert.ToInt32(textBox3.Text.ToString()) * Convert.ToInt32(textBox2.Text.ToString()))).ToString());
+        }
+        /*
         private void SaadaArve_btn_Click(object sender, EventArgs e)
         {
             string adress = Interaction.InputBox("Sisesta e-mail", "Kuhu saada", "egorfedorenko@gmail.com.ee");
@@ -358,6 +372,6 @@ namespace Tooted
             {
                 MessageBox.Show("Viga");
             }
-        }
+        }*/
     }
 }

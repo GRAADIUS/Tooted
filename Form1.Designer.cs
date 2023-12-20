@@ -198,8 +198,9 @@
             this.button7.Name = "button7";
             this.button7.Size = new System.Drawing.Size(70, 39);
             this.button7.TabIndex = 24;
-            this.button7.Text = "Kustuta";
+            this.button7.Text = "Eemalda";
             this.button7.UseVisualStyleBackColor = true;
+            this.button7.Click += new System.EventHandler(this.button7_Click);
             // 
             // button8
             // 
@@ -207,7 +208,7 @@
             this.button8.Name = "button8";
             this.button8.Size = new System.Drawing.Size(70, 39);
             this.button8.TabIndex = 25;
-            this.button8.Text = "Kustuta";
+            this.button8.Text = "Maksta";
             this.button8.UseVisualStyleBackColor = true;
             // 
             // button9
@@ -216,8 +217,9 @@
             this.button9.Name = "button9";
             this.button9.Size = new System.Drawing.Size(70, 39);
             this.button9.TabIndex = 26;
-            this.button9.Text = "Kustuta";
+            this.button9.Text = "Valin";
             this.button9.UseVisualStyleBackColor = true;
+            this.button9.Click += new System.EventHandler(this.button9_Click);
             // 
             // Form1
             // 
