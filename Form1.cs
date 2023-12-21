@@ -21,7 +21,7 @@ namespace Tooted
 {
     public partial class Form1 : Form
     {
-        SqlConnection connect = new SqlConnection(@"Data Source=HP-CZC2349HSZ;Initial Catalog=Tooded_DB;Integrated Security=True");
+        SqlConnection connect = new SqlConnection(@"Data Source=HP-CZC2349HTG;Initial Catalog=Tooded_DB;Integrated Security=True");
 
         SqlDataAdapter adapter_toode, adapter_kategooria;
         SqlCommand command;
@@ -60,6 +60,31 @@ namespace Tooted
             }
             connect.Close();
         }
+        public void NaitaAndmed()
+        {
+            connect.Open();
+            DataTable dt_toode = new DataTable();
+            adapter_toode = new SqlDataAdapter("SELECT Toodetabel.Id,Toodetabel.Toodenimetus,Toodetabel.Kogus,Toodetabel.Hind,Toodetabel.Pilt, Kategooriatabel.Kategooria_nimetus as Kategooria_nimetus  FROM Toodetabel INNER JOIN Kategooriatabel on Toodetabel.KategooriadID=Kategooriatabel.Id ", connect);
+            adapter_toode.Fill(dt_toode);
+            dataGridView1.Columns.Clear();
+            dataGridView1.DataSource = dt_toode;
+            DataGridViewComboBoxColumn combo_kat = new DataGridViewComboBoxColumn();
+            combo_kat.DataPropertyName = "Kategooria_nimetus";
+            HashSet<string> keys = new HashSet<string>();
+            foreach (DataRow item in dt_toode.Rows)
+            {
+                string kat_n = item["Kategooria_nimetus"].ToString();
+                if (!keys.Contains(kat_n))
+                {
+                    keys.Add(kat_n);
+                    combo_kat.Items.Add(kat_n);
+                }
+            }
+            dataGridView1.Columns.Add(combo_kat);
+            pictureBox1.Image = Image.FromFile(Path.Combine(Path.GetFullPath(@"..\..\img"), "epood.png"));
+            pictureBox1.SizeMode = PictureBoxSizeMode.Zoom;
+            connect.Close();
+        }
 
         private void button1_Click(object sender, EventArgs e) //lisa kat
         {
@@ -86,7 +111,6 @@ namespace Tooted
                 MessageBox.Show("Selline kategooriat on juba olemas!");
             }
         }
-
         private void button2_Click(object sender, EventArgs e) //kasuta kat
         {
             if (comboBox1.SelectedItem != null)
@@ -101,7 +125,6 @@ namespace Tooted
                 NaitaKategooriad();
             }
         }
-
         private void button3_Click(object sender, EventArgs e) //otsi
         {
             open = new OpenFileDialog();
@@ -130,7 +153,6 @@ namespace Tooted
             }
 
         }
-
         private void button4_Click(object sender, EventArgs e) //lisa
         {
             if (textBox1.Text.Trim() != string.Empty && textBox3.Text.Trim() != string.Empty && textBox2.Text.Trim() != string.Empty && comboBox1.SelectedItem != null)
@@ -168,7 +190,6 @@ namespace Tooted
             }
 
         }
-
         private void button5_Click(object sender, EventArgs e) //uuenda
         {
 
@@ -197,7 +218,6 @@ namespace Tooted
                 MessageBox.Show("Viga");
             }
         }
-
         private void button6_Click(object sender, EventArgs e) //kustuta
         {
             Id = Convert.ToInt32(dataGridView1.SelectedRows[0].Cells["Id"].Value);
@@ -219,31 +239,21 @@ namespace Tooted
                 MessageBox.Show("Viga Tooded tabelist andmete kustutamisega");
             }
         }
-
-        public void NaitaAndmed()
+        private void button7_Click(object sender, EventArgs e)
         {
-            connect.Open();
-            DataTable dt_toode = new DataTable();
-            adapter_toode = new SqlDataAdapter("SELECT Toodetabel.Id,Toodetabel.Toodenimetus,Toodetabel.Kogus,Toodetabel.Hind,Toodetabel.Pilt, Kategooriatabel.Kategooria_nimetus as Kategooria_nimetus  FROM Toodetabel INNER JOIN Kategooriatabel on Toodetabel.KategooriadID=Kategooriatabel.Id ", connect);
-            adapter_toode.Fill(dt_toode);
-            dataGridView1.Columns.Clear();
-            dataGridView1.DataSource = dt_toode;
-            DataGridViewComboBoxColumn combo_kat = new DataGridViewComboBoxColumn();
-            combo_kat.DataPropertyName = "Kategooria_nimetus";
-            HashSet<string> keys = new HashSet<string>();
-            foreach (DataRow item in dt_toode.Rows)
-            {
-                string kat_n = item["Kategooria_nimetus"].ToString();
-                if (!keys.Contains(kat_n))
-                {
-                    keys.Add(kat_n);
-                    combo_kat.Items.Add(kat_n);
-                }
-            }
-            dataGridView1.Columns.Add(combo_kat);
-            pictureBox1.Image = Image.FromFile(Path.Combine(Path.GetFullPath(@"..\..\Images"), "epood.png"));
-            pictureBox1.SizeMode = PictureBoxSizeMode.Zoom;
-            connect.Close();
+            textBox1.Text = "";
+            textBox3.Text = "";
+            textBox2.Text = "";
+            pictureBox1.Image = null;
+        }
+        private void button8_Click(object sender, EventArgs e)
+        {
+
+        }
+        private void button9_Click(object sender, EventArgs e)
+        {
+            Tooded_list.Add("-----------------------");
+            Tooded_list.Add((textBox1.Text + "  " + textBox2.Text + "  " + textBox3.Text + "  " + (Convert.ToInt32(textBox3.Text.ToString()) * Convert.ToInt32(textBox2.Text.ToString()))).ToString());
         }
          
         private void dataGridView1_RowHeaderMouseClick(object sender, DataGridViewCellMouseEventArgs e)
@@ -254,12 +264,12 @@ namespace Tooted
             textBox2.Text = dataGridView1.Rows[e.RowIndex].Cells["Hind"].Value.ToString();
             try
             {
-                pictureBox1.Image = Image.FromFile(Path.Combine(Path.GetFullPath(@"..\..\Images"), dataGridView1.Rows[e.RowIndex].Cells["Pilt"].Value.ToString()));
+                pictureBox1.Image = Image.FromFile(Path.Combine(Path.GetFullPath(@"..\..\img"), dataGridView1.Rows[e.RowIndex].Cells["Pilt"].Value.ToString()));
             }
             catch (Exception)
             {
 
-                pictureBox1.Image = Image.FromFile(Path.Combine(Path.GetFullPath(@"..\..\Images"), "epood.png"));
+                pictureBox1.Image = Image.FromFile(Path.Combine(Path.GetFullPath(@"..\..\img"), "epood.png"));
                 pictureBox1.SizeMode = PictureBoxSizeMode.Zoom;
             }
             comboBox1.SelectedItem = dataGridView1.Rows[e.RowIndex].Cells[5].Value;//?
@@ -333,19 +343,7 @@ namespace Tooted
             Tooded_list.Add((textBox1.Text + "  " + textBox2.Text + "  " + textBox3.Text + "  " + (Convert.ToInt32(textBox3.Text.ToString()) * Convert.ToInt32(textBox2.Text.ToString()))).ToString());
         }
 
-        private void button7_Click(object sender, EventArgs e)
-        {
-            textBox1.Text = "";
-            textBox3.Text = "";
-            textBox2.Text = "";
-            pictureBox1.Image = null;
-        }
 
-        private void button9_Click(object sender, EventArgs e)
-        {
-            Tooded_list.Add("-----------------------");
-            Tooded_list.Add((textBox1.Text + "  " + textBox2.Text + "  " + textBox3.Text + "  " + (Convert.ToInt32(textBox3.Text.ToString()) * Convert.ToInt32(textBox2.Text.ToString()))).ToString());
-        }
         /*
         private void SaadaArve_btn_Click(object sender, EventArgs e)
         {
@@ -364,7 +362,7 @@ namespace Tooted
                 mail.To.Add(adress);//kellele
                 mail.Subject = "Arve";
                 mail.Body = "Arve on ostetud ja ta on maanuses";
-                mail.Attachments.Add(new Attachment(@"..\..\Arved\Arve_.pdf"));
+                mail.Attachments.Add(new Attachment(@"..\..\arv\Arve_.pdf"));
                 smtpClient.Send(mail);
                 MessageBox.Show("Arve oli saadetud mailile: " + adress);
             }
